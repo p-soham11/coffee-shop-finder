@@ -1,7 +1,7 @@
 /** @format */
 
-const Product = require("../models/productModel");
-const CoffeeShop = require("../models/coffeeShopModel");
+const Product = require("../models/productSchema");
+const CoffeeShop = require("../models/coffeeShopSchema");
 
 // Get all products
 exports.getProducts = async (req, res) => {

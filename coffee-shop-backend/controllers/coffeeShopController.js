@@ -1,31 +1,5 @@
 /** @format */
-
-// /** @format */
-
-// const CoffeeShop = require("../models/coffeeShop");
-
-// // Get all coffee shops
-// exports.getCoffeeShops = async (req, res) => {
-//     try {
-//         const shops = await CoffeeShop.find();
-//         res.json(shops);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
-
-// // Create a new coffee shop
-// exports.addCoffeeShop = async (req, res) => {
-//     const { name, location, rating, products } = req.body;
-//     try {
-//         const newShop = new CoffeeShop({ name, location, rating, products });
-//         const savedShop = await newShop.save();
-//         res.status(201).json(savedShop);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
-
+const axios = require("axios");
 const CoffeeShop = require("../models/coffeeShopSchema");
 const Product = require("../models/productSchema");
 
@@ -36,6 +10,32 @@ exports.getCoffeeShops = async (req, res) => {
         res.json(coffeeShops);
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+};
+
+// Getting nearby coffee shops
+exports.getNearbyCoffeeShops = async (req, res) => {
+    const { address } = req.query;
+    const googleApiKey = process.env.GOOGLE_API_KEY;
+
+    try {
+        const { data } = await axios.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleApiKey}`
+        );
+        const { lat, lng } = data.results[0].geometry.location;
+
+        const nearbyShops = await CoffeeShop.find({
+            location: {
+                $near: {
+                    $geometry: { type: "Point", coordinates: [lng, lat] },
+                    $maxDistance: 12000, // 12km
+                },
+            },
+        }).populate("products");
+
+        res.json(nearbyShops);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };
 

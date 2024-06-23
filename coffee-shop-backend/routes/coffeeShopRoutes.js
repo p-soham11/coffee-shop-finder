@@ -4,10 +4,11 @@ const express = require("express");
 const router = express.Router();
 const coffeeShopController = require("../controllers/coffeeShopController");
 
-router.get("/", coffeeShopController.getCoffeeShops);
-router.get("/:id", coffeeShopController.getCoffeeShopById);
-router.post("/", coffeeShopController.createCoffeeShop);
-router.put("/:id", coffeeShopController.updateCoffeeShop);
-router.delete("/:id", coffeeShopController.deleteCoffeeShop);
+router.get("/getAll", coffeeShopController.getCoffeeShops);
+router.get("/shops/nearby", coffeeShopController.getNearbyCoffeeShops);
+router.get("/shop/:id", coffeeShopController.getCoffeeShopById);
+router.post("/create", coffeeShopController.createCoffeeShop);
+router.put("/update/:id", coffeeShopController.updateCoffeeShop);
+router.delete("/del/:id", coffeeShopController.deleteCoffeeShop);
 
 module.exports = router;
