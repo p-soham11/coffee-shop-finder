@@ -1,17 +1,13 @@
 /** @format */
 
 const express = require("express");
-const {
-    getCoffeeShops,
-    addCoffeeShop,
-} = require("../controllers/coffeeShopController");
-
 const router = express.Router();
+const coffeeShopController = require("../controllers/coffeeShopController");
 
-// Route to get all coffee shops
-router.get("/coffeeshops", getCoffeeShops);
-
-// Route to create a new coffee shop
-router.post("/coffeeshops", addCoffeeShop);
+router.get("/", coffeeShopController.getCoffeeShops);
+router.get("/:id", coffeeShopController.getCoffeeShopById);
+router.post("/", coffeeShopController.createCoffeeShop);
+router.put("/:id", coffeeShopController.updateCoffeeShop);
+router.delete("/:id", coffeeShopController.deleteCoffeeShop);
 
 module.exports = router;
