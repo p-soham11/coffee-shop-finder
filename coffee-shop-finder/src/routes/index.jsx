@@ -23,7 +23,7 @@ const Routes = () => {
             element: <CoffeeShopPage />,
         },
         {
-            path: "/search/:query",
+            path: "/search",
             element: <SearchPage />,
         },
     ]);
