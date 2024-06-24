@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Coffee Shop Locator
 
 ## Overview
@@ -6,16 +8,54 @@ This project is a full-stack web application that helps users find nearby coffee
 
 ## Features
 
-- **Homepage**: Users can enter their location to find nearby coffee shops.
-- **Search Page**: Displays a list of coffee shops near the provided location.
-- **Coffee Shop Page**: Shows detailed information and menu for each coffee shop.
+-   **Homepage**: Users can enter their location to find nearby coffee shops. (Note: The user will be able to find any cafe within 8 KMs radius.)
+-   **Search Page**: Displays a list of coffee shops near the provided location.
+-   **Coffee Shop Page**: Shows detailed information and menu for each coffee shop.
 
 ## Technologies Used
 
-- **Frontend**: React, Tailwind CSS
-- **Backend**: Node.js, Express
-- **Database**: MongoDB (Atlas), Mongoose
-- **APIs**: Google Maps API
+-   **Frontend**: React, Tailwind CSS
+-   **Backend**: Node.js, Express
+-   **Database**: MongoDB (Atlas), Mongoose
+-   **APIs**: Google Maps API
 
+## File Structure
 
-
+```
+coffee-shop-locator/
+├── coffee-shop-backend/
+│ ├── config/
+| | └── db.js
+| ├── controllers/
+│ │ |── coffeeShopController.js
+│ │ └── productController.js
+│ ├── models/
+│ │ ├── coffeeShopSchema.js
+│ │ └── productSchema.js
+│ ├── routes/
+│ │ |── coffeeShopRoutes.js
+│ │ └── productsRoutes.js
+│ ├── .env
+│ └── server.js
+├── coffee-shop-finder/
+│ ├── public/
+│ ├── src/
+│ │ ├── assets/
+│ │ ├── components/
+│ │ │ ├── locationSearch.jsx
+│ │ │ └── TopBar.jsx
+│ │ ├── pages/
+│ │ │ ├── CoffeeShopPage.jsx
+│ │ │ ├── HomePage.jsx
+│ │ │ └── SearchPage.jsx
+│ │ ├── routes/
+│ │ │ └── index.jsx
+│ │ ├── App.jsx
+│ │ └── index.jsx
+│ ├── .env
+│ ├── tailwind.config.js
+│ ├── postcss.config.js
+│ ├── vite.config.js
+│ └── package.json
+└── README.md
+```
