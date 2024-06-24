@@ -16,25 +16,37 @@ exports.getCoffeeShops = async (req, res) => {
 // Getting nearby coffee shops
 exports.getNearbyCoffeeShops = async (req, res) => {
     const { address } = req.query;
+
     const googleApiKey = process.env.GOOGLE_API_KEY;
 
     try {
         const { data } = await axios.get(
             `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleApiKey}`
         );
+
+        if (data.results.length === 0) {
+            return res.status(404).json({ error: "Address not found" });
+        }
+
         const { lat, lng } = data.results[0].geometry.location;
+        console.log("Coordinates:", lat, lng);
 
         const nearbyShops = await CoffeeShop.find({
             location: {
                 $near: {
-                    $geometry: { type: "Point", coordinates: [lng, lat] },
-                    $maxDistance: 12000, // 12km
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [lat, lng],
+                    },
+                    $maxDistance: 8000,
                 },
             },
         }).populate("products");
 
+        console.log("Nearby Shops:", nearbyShops);
         res.json(nearbyShops);
     } catch (err) {
+        console.error("Error:", err);
         res.status(500).json({ error: err.message });
     }
 };

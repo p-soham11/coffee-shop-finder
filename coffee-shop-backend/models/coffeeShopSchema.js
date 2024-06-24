@@ -10,7 +10,7 @@ const CoffeeShopSchema = new mongoose.Schema({
     locationName: String,
     location: {
         type: { type: String, default: "Point" },
-        coordinates: { type: [Number], required: true },
+        coordinates: { type: [Number], required: true, index: "2dsphere" },
     },
     rating: {
         type: Number,
@@ -25,8 +25,6 @@ const CoffeeShopSchema = new mongoose.Schema({
         },
     ],
 });
-
-CoffeeShopSchema.index({ location: "2dsphere" });
 
 const CoffeeShop = mongoose.model("CoffeeShop", CoffeeShopSchema);
 
